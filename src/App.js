@@ -1,3 +1,4 @@
+import logoSVG from "./logo.svg"
 // UserNavbar
 import Classroom from "./pages/Classroom/Body";
 import Settings from "./pages/Settings/Body";
@@ -61,6 +62,7 @@ const mainpages = [
 export default function App() {
   return (
     <>
+    
       <CssBaseline />
       <nav>
         <HideAppBar somProp={pages} logo={logo} logoTitle="L3Education" />
