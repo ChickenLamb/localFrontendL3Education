@@ -3,11 +3,10 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import { Authenticator, View, Heading, Image, Text, Button, useTheme, useAuthenticator } from '@aws-amplify/ui-react';
+import { Authenticator, View, Heading, Image, Text, Button, useTheme, useAuthenticator, Card} from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
-import logo from "../../../../assets/logo.svg"
-
-
+import logo from "../../../../assets/logo.svg";
+import {Auth} from 'aws-amplify';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -16,7 +15,12 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }));
 
-
+async function onSignOutClick() {
+  await Auth.signOut()
+     .then(data => {console.log(data);window.location.replace(window.location.origin);})
+     .catch(err => console.log(err));
+  console.log(Auth.signOut());
+ }
 
 const components = {
   Header() {
@@ -254,13 +258,22 @@ const formFields = {
   },
 };
 
-export default function Body() {
+export default function Body(props) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
         <Authenticator formFields={formFields} components={components}>
-      {({ signOut }) => <button onClick={signOut}>Sign out</button>}
+        {({ signOut, user }) => (
+        <main> 
+          {props.setLogin(user.getSignInUserSession().idToken.jwtToken)}
+          <Card>
+          <h1>你好，{user.attributes.email}</h1>
+          <h3>确定要登出吗？</h3>
+          <Button onClick={onSignOutClick}>登出</Button>
+          </Card>
+        </main>
+      )}
     </Authenticator>
         </Grid>
         </Grid>

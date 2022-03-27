@@ -17,9 +17,13 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import HideAppBar from "./components/AppBar/HideAppBar";
 import Navbar from "./components/Mainpage_Appbar/Navbar";
 import { Routes, Route } from "react-router-dom";
+
+import { useState } from "react";
+
+
 const pages = [
   {
-    name: "首頁",
+    name: "我的首頁",
     link: "Home"
   },
 
@@ -55,17 +59,17 @@ const mainpages = [
     link: "Contact_Us"
   },
   {
-    name: "登入",
+    name: "登入/登出",
     link: "Login"
   }
 ];
 export default function App() {
+  const [login, setLogin] = useState(false);
   return (
     <>
-    
       <CssBaseline />
       <nav>
-        <HideAppBar somProp={pages} logo={logo} logoTitle="L3Education" />
+        <HideAppBar login={login} somProp={pages} logo={logo} logoTitle="L3Education" />
         <Navbar pages={mainpages} />
       </nav>
       <Routes>
@@ -73,12 +77,12 @@ export default function App() {
         <Route path="Classroom" element={<Classroom />} />
         <Route path="Settings" element={<Settings />} />
         <Route path="Subscriptions" element={<Subscriptions />} />
-
+{console.log('this',login)}
         <Route path="*" index element={<Mainpage />} />
         <Route path="About_Us" element={<AboutUs />} />
         <Route path="Contact_Us" element={<ContactUs />} />
         <Route path="Our_Courses" element={<OurCourses />} />
-        <Route path="Login" element={<Login />} />
+        <Route path="Login" element={<Login setLogin={setLogin} />} />
       </Routes>
     </>
   );
