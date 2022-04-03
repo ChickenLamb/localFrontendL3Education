@@ -266,6 +266,7 @@ export default function Body(props) {
         <Authenticator formFields={formFields} components={components}>
         {({ signOut, user }) => (
         <main> 
+          {console.log(user)}
           {props.setLogin(user.signInUserSession.accessToken.jwtToken)}
           <Card>
           <h1>你好，{user.attributes.email}</h1>
