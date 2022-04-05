@@ -22,8 +22,8 @@ type TEACHERMetaData = {
 
 export declare class SUBSCRIPTION {
   readonly id: string;
-  readonly coursesID: string;
-  readonly studentID: string;
+  readonly coursesID?: string | null;
+  readonly studentID?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<SUBSCRIPTION, SUBSCRIPTIONMetaData>);
@@ -42,7 +42,7 @@ export declare class STUDENT {
 
 export declare class COURSES {
   readonly id: string;
-  readonly teacherID: string;
+  readonly teacherID?: string | null;
   readonly name?: string | null;
   readonly description?: string | null;
   readonly url?: string | null;

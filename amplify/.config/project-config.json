@@ -2,7 +2,7 @@
   "providers": [
     "awscloudformation"
   ],
-  "projectName": "L3Ee",
+  "projectName": "localFrontendL3Educa",
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {

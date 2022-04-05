@@ -14,14 +14,14 @@ export const schema = {
                     "name": "coursesID",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "studentID": {
                     "name": "studentID",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "createdAt": {
@@ -85,7 +85,12 @@ export const schema = {
                                 ]
                             },
                             {
-                                "allow": "private",
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "Student"
+                                ],
                                 "operations": [
                                     "read"
                                 ]
@@ -187,7 +192,7 @@ export const schema = {
                     "name": "teacherID",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "name": {
@@ -277,7 +282,12 @@ export const schema = {
                                 ]
                             },
                             {
-                                "allow": "private",
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "Student"
+                                ],
                                 "operations": [
                                     "read"
                                 ]
@@ -368,5 +378,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "35e19a6e75e978e5be92fb0e5f77fafa"
+    "version": "6071a04fcab4982b5491891c5a4db8f1"
 };
