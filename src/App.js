@@ -10,6 +10,8 @@ import AboutUs from "./pages/Mainpage/pages/About_Us/Body";
 import ContactUs from "./pages/Mainpage/pages/Contact_Us/Body";
 import Login from "./pages/Mainpage/pages/Login/Body";
 import OurCourses from "./pages/Mainpage/pages/Our_Courses/Body";
+//Footer
+import Footer from "./components/Footer/Body";
 //default
 import logo from "./assets/logo.png";
 import "./App.css";
@@ -84,6 +86,7 @@ export default function App() {
         <Route path="Our_Courses" element={<OurCourses />} />
         <Route path="Login" element={<Login setLogin={setLogin} />} />
       </Routes>
+      <Footer/>
     </>
   );
 }
