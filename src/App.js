@@ -99,7 +99,7 @@ const mainpages = [
     link: "Login"
   }
 ];
-const baseURL = "http://api.l3education.com.my/timetable/mobile";
+
 axios.defaults.baseURL ='http://api.l3education.com.my';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 export default function App() {
@@ -109,20 +109,21 @@ export default function App() {
       headers: {
           'Content-Type': 'application/json;charset=UTF-8',
           "Authorization": `Bearer ${login}`,
+          "Accept":"*/*",
+          "Cache-Control":"no-cache",
           "Access-Control-Allow-Origin": "*",
-          // "Accept":"*/*",
-          // "Cache-Control":"no-cache",
+          "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+
           // "Host":"",
           // // "Access-Control-Allow-Origin": "*",
           // // "Access-Control-Allow-Headers":"*",
           // // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
           // "Accept-Encoding":"gzip, deflate, br",
           // "Connection":"keep-alive",
-  
           // "withCredentials": "false",
       }
     };
-    axios.get(baseURL, axiosConfig).then((response) => {
+    axios.get('/timetable/mobile', axiosConfig).then((response) => {
       console.log(response.data);
     });
   },[login])
