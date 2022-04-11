@@ -1,7 +1,7 @@
 export const schema = {
     "models": {
-        "SUBSCRIPTION": {
-            "name": "SUBSCRIPTION",
+        "Teacher": {
+            "name": "Teacher",
             "fields": {
                 "id": {
                     "name": "id",
@@ -10,19 +10,47 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "coursesID": {
-                    "name": "coursesID",
+                "name": {
+                    "name": "name",
                     "isArray": false,
-                    "type": "ID",
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "email": {
+                    "name": "email",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "description": {
+                    "name": "description",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
-                "studentID": {
-                    "name": "studentID",
+                "age": {
+                    "name": "age",
                     "isArray": false,
-                    "type": "ID",
+                    "type": "Int",
                     "isRequired": false,
                     "attributes": []
+                },
+                "hasTeach": {
+                    "name": "hasTeach",
+                    "isArray": true,
+                    "type": {
+                        "model": "Course"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "teacherID"
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -42,29 +70,11 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "SUBSCRIPTIONS",
+            "pluralName": "Teachers",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byCOURSES",
-                        "fields": [
-                            "coursesID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "bySTUDENT",
-                        "fields": [
-                            "studentID"
-                        ]
-                    }
                 },
                 {
                     "type": "auth",
@@ -75,13 +85,13 @@ export const schema = {
                                 "provider": "userPools",
                                 "allow": "groups",
                                 "groups": [
-                                    "Admin"
+                                    "super_admin"
                                 ],
                                 "operations": [
-                                    "read",
                                     "create",
                                     "update",
-                                    "delete"
+                                    "delete",
+                                    "read"
                                 ]
                             },
                             {
@@ -89,7 +99,7 @@ export const schema = {
                                 "provider": "userPools",
                                 "allow": "groups",
                                 "groups": [
-                                    "Student"
+                                    "student"
                                 ],
                                 "operations": [
                                     "read"
@@ -100,106 +110,14 @@ export const schema = {
                 }
             ]
         },
-        "STUDENT": {
-            "name": "STUDENT",
+        "Course": {
+            "name": "Course",
             "fields": {
                 "id": {
                     "name": "id",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
-                    "attributes": []
-                },
-                "name": {
-                    "name": "name",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "SUBSCRIPTIONS": {
-                    "name": "SUBSCRIPTIONS",
-                    "isArray": true,
-                    "type": {
-                        "model": "SUBSCRIPTION"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "studentID"
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "STUDENTS",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "Admin"
-                                ],
-                                "operations": [
-                                    "read",
-                                    "create",
-                                    "update",
-                                    "delete"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "COURSES": {
-            "name": "COURSES",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "teacherID": {
-                    "name": "teacherID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "name": {
-                    "name": "name",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
                     "attributes": []
                 },
                 "description": {
@@ -209,25 +127,95 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "url": {
-                    "name": "url",
+                "startDate": {
+                    "name": "startDate",
                     "isArray": false,
-                    "type": "String",
+                    "type": "AWSDate",
                     "isRequired": false,
                     "attributes": []
                 },
-                "SUBSCRIPTIONS": {
-                    "name": "SUBSCRIPTIONS",
+                "endDate": {
+                    "name": "endDate",
+                    "isArray": false,
+                    "type": "AWSDate",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "hasOnlineClassroom": {
+                    "name": "hasOnlineClassroom",
+                    "isArray": false,
+                    "type": {
+                        "model": "OnlineClassroom"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": "id",
+                        "targetName": "courseHasOnlineClassroomId"
+                    }
+                },
+                "courseCost": {
+                    "name": "courseCost",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "active": {
+                    "name": "active",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "hasNotes": {
+                    "name": "hasNotes",
                     "isArray": true,
                     "type": {
-                        "model": "SUBSCRIPTION"
+                        "model": "Note"
                     },
                     "isRequired": false,
                     "attributes": [],
                     "isArrayNullable": true,
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "coursesID"
+                        "associatedWith": "courseID"
+                    }
+                },
+                "teacherID": {
+                    "name": "teacherID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "hasExcercise": {
+                    "name": "hasExcercise",
+                    "isArray": true,
+                    "type": {
+                        "model": "Note"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "courseID"
+                    }
+                },
+                "hasTimetable": {
+                    "name": "hasTimetable",
+                    "isArray": true,
+                    "type": {
+                        "model": "Timetable"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "courseID"
                     }
                 },
                 "createdAt": {
@@ -245,10 +233,17 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "courseHasOnlineClassroomId": {
+                    "name": "courseHasOnlineClassroomId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
-            "pluralName": "COURSES",
+            "pluralName": "Courses",
             "attributes": [
                 {
                     "type": "model",
@@ -257,7 +252,7 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byTEACHER",
+                        "name": "byTeacher",
                         "fields": [
                             "teacherID"
                         ]
@@ -272,13 +267,10 @@ export const schema = {
                                 "provider": "userPools",
                                 "allow": "groups",
                                 "groups": [
-                                    "Admin"
+                                    "student"
                                 ],
                                 "operations": [
-                                    "read",
-                                    "create",
-                                    "update",
-                                    "delete"
+                                    "read"
                                 ]
                             },
                             {
@@ -286,10 +278,25 @@ export const schema = {
                                 "provider": "userPools",
                                 "allow": "groups",
                                 "groups": [
-                                    "Student"
+                                    "teacher"
                                 ],
                                 "operations": [
-                                    "read"
+                                    "read",
+                                    "update"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "super_admin"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update",
+                                    "delete"
                                 ]
                             }
                         ]
@@ -297,8 +304,8 @@ export const schema = {
                 }
             ]
         },
-        "TEACHER": {
-            "name": "TEACHER",
+        "OnlineClassroom": {
+            "name": "OnlineClassroom",
             "fields": {
                 "id": {
                     "name": "id",
@@ -307,22 +314,618 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "COURSES": {
-                    "name": "COURSES",
+                "zoomUrl": {
+                    "name": "zoomUrl",
+                    "isArray": false,
+                    "type": "AWSURL",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "OnlineClassrooms",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "student"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "teacher"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "super_admin"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "Note": {
+            "name": "Note",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "url": {
+                    "name": "url",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "validUntil": {
+                    "name": "validUntil",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "courseID": {
+                    "name": "courseID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Notes",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCourse",
+                        "fields": [
+                            "courseID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "student"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "teacher"
+                                ],
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "super_admin"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "Timetable": {
+            "name": "Timetable",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "courseDate": {
+                    "name": "courseDate",
+                    "isArray": false,
+                    "type": "AWSDate",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "courseStartTime": {
+                    "name": "courseStartTime",
+                    "isArray": false,
+                    "type": "AWSTime",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "courseEndTime": {
+                    "name": "courseEndTime",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isCancel": {
+                    "name": "isCancel",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isFinish": {
+                    "name": "isFinish",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "courseID": {
+                    "name": "courseID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Timetables",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCourse",
+                        "fields": [
+                            "courseID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "student"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "teacher"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "super_admin"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "Excercise": {
+            "name": "Excercise",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "dateline": {
+                    "name": "dateline",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "validUntil": {
+                    "name": "validUntil",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "url": {
+                    "name": "url",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "description": {
+                    "name": "description",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "courseID": {
+                    "name": "courseID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Excercises",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCourse",
+                        "fields": [
+                            "courseID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "student"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "teacher"
+                                ],
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "super_admin"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "CourseSubcription": {
+            "name": "CourseSubcription",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userID": {
+                    "name": "userID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "course": {
+                    "name": "course",
+                    "isArray": false,
+                    "type": {
+                        "model": "Course"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": "id",
+                        "targetName": "courseSubcriptionCourseId"
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "courseSubcriptionCourseId": {
+                    "name": "courseSubcriptionCourseId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                }
+            },
+            "syncable": true,
+            "pluralName": "CourseSubcriptions",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUser",
+                        "fields": [
+                            "userID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "provider": "userPools",
+                                "ownerField": "userID",
+                                "allow": "owner",
+                                "operations": [
+                                    "create",
+                                    "read",
+                                    "update"
+                                ],
+                                "identityClaim": "cognito:username"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "User": {
+            "name": "User",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "isActive": {
+                    "name": "isActive",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "hasSubscribe": {
+                    "name": "hasSubscribe",
                     "isArray": true,
                     "type": {
-                        "model": "COURSES"
+                        "model": "CourseSubcription"
                     },
                     "isRequired": false,
                     "attributes": [],
                     "isArrayNullable": true,
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "teacherID"
+                        "associatedWith": "userID"
                     }
+                },
+                "hasMakePayment": {
+                    "name": "hasMakePayment",
+                    "isArray": true,
+                    "type": {
+                        "model": "CourseSubcription"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "userID"
+                    }
+                },
+                "email": {
+                    "name": "email",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "name": {
                     "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "owner": {
+                    "name": "owner",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -346,7 +949,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "TEACHERS",
+            "pluralName": "Users",
             "attributes": [
                 {
                     "type": "model",
@@ -357,11 +960,139 @@ export const schema = {
                     "properties": {
                         "rules": [
                             {
+                                "allow": "private",
+                                "operations": [
+                                    "create"
+                                ]
+                            },
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "operations": [
+                                    "read",
+                                    "update",
+                                    "delete"
+                                ],
+                                "identityClaim": "cognito:username"
+                            },
+                            {
                                 "groupClaim": "cognito:groups",
                                 "provider": "userPools",
                                 "allow": "groups",
                                 "groups": [
-                                    "Admin"
+                                    "super_admin"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "PaymentRecord": {
+            "name": "PaymentRecord",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "amount": {
+                    "name": "amount",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "reference": {
+                    "name": "reference",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "time": {
+                    "name": "time",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userID": {
+                    "name": "userID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "voided": {
+                    "name": "voided",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "PaymentRecords",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUser",
+                        "fields": [
+                            "userID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "operations": [
+                                    "create",
+                                    "read"
+                                ],
+                                "identityClaim": "cognito:username"
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "super_admin"
                                 ],
                                 "operations": [
                                     "read",
@@ -378,5 +1109,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "6071a04fcab4982b5491891c5a4db8f1"
+    "version": "656a31a5671253debcc768649ff95e12"
 };

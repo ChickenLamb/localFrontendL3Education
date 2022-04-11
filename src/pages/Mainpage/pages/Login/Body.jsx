@@ -3,24 +3,25 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import { Authenticator, View, Heading, Image, Text, Button, useTheme, useAuthenticator, Card} from '@aws-amplify/ui-react';
+import { Authenticator, View, Heading, Image, Text, Button, useTheme, useAuthenticator, Card } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import logo from "../../../../assets/logo.svg";
-import {Auth} from 'aws-amplify';
+import { Auth } from 'aws-amplify';
+import Container from '@mui/material/Container';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
-  color: theme.palette.text.secondary
+  color: theme.palette.text.secondary,
 }));
 
 async function onSignOutClick() {
   await Auth.signOut()
-     .then(data => {console.log(data);window.location.replace(window.location.origin);})
-     .catch(err => console.log(err));
+    .then(data => { console.log(data); window.location.replace(window.location.origin); })
+    .catch(err => console.log(err));
   console.log(Auth.signOut());
- }
+}
 
 const components = {
   Header() {
@@ -260,24 +261,27 @@ const formFields = {
 
 export default function Body(props) {
   return (
+
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-        <Authenticator formFields={formFields} components={components}>
-        {({ signOut, user }) => (
-        <main> 
-          {console.log(user)}
-          {props.setLogin(user.signInUserSession.accessToken.jwtToken)}
-          <Card>
-          <h1>你好，{user.attributes.email}</h1>
-          <h3>确定要登出吗？</h3>
-          <Button onClick={onSignOutClick}>登出</Button>
-          </Card>
-        </main>
-      )}
-    </Authenticator>
+      <Grid container spacing={0}>
+        <Grid item xs={1} md={2} lg={3}/>
+        <Grid item xs={11} md={10} lg={9}>
+
+              <Authenticator formFields={formFields} components={components}>
+                {({ signOut, user }) => (
+                  <main>
+                    {console.log(user)}
+                    {props.setLogin(user.signInUserSession.accessToken.jwtToken)}
+                    <Card>
+                      <h1>你好，{user.attributes.email}</h1>
+                      <h3>确定要登出吗？</h3>
+                      <Button onClick={onSignOutClick}>登出</Button>
+                    </Card>
+                  </main>
+                )}
+              </Authenticator>
         </Grid>
-        </Grid>
+      </Grid>
     </Box>
   );
 }

@@ -28,7 +28,7 @@ export default function Navbar(props) {
               to={item.link}
               style={(isActive) => ({
                 color: "inherit",
-                fontSize: "0.2em"
+                fontSize: "1em"
               })}
             >
               {item.name}
