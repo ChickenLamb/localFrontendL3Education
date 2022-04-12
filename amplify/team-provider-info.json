@@ -11,6 +11,17 @@
       "StackId": "arn:aws:cloudformation:ap-southeast-1:880360291562:stack/amplify-l3fullbackend-staging-11922/d8e384f0-6f57-11ec-be3d-02a58faeed02",
       "AmplifyAppId": "d3vag8114ok3eu",
       "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-l3fullbackend-staging-11922-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+    },
+    "categories": {
+      "function": {
+        "Student": {
+          "deploymentBucketName": "amplify-l3fullbackend-staging-11922-deployment",
+          "s3Key": "amplify-builds/Student-4e324164424641424d6f-build.zip"
+        }
+      },
+      "auth": {
+        "L3FullBackend": {}
+      }
     }
   }
 }
