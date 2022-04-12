@@ -24,9 +24,6 @@
       "Requires Uppercase"
     ],
     "requiredAttributes": [
-      "email",
-      "given_name",
-      "family_name",
       "phone_number"
     ],
     "aliasAttributes": [],
