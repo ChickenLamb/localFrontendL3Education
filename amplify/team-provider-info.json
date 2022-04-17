@@ -13,14 +13,14 @@
       "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-l3fullbackend-staging-11922-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
+      "auth": {
+        "L3FullBackend": {}
+      },
       "function": {
         "Student": {
           "deploymentBucketName": "amplify-l3fullbackend-staging-11922-deployment",
           "s3Key": "amplify-builds/Student-4e324164424641424d6f-build.zip"
         }
-      },
-      "auth": {
-        "L3FullBackend": {}
       }
     }
   }

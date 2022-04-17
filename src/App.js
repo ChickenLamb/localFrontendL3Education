@@ -100,39 +100,63 @@ const mainpages = [
   }
 ];
 
-axios.defaults.baseURL ='http://api.l3education.com.my';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-export default function App() {
-  const [login, setLogin] = useState(false);
-  useEffect(()=>{
-    var axiosConfig = {
-      headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-          "Authorization": `Bearer ${login}`,
-          "Accept":"*/*",
-          "Cache-Control":"no-cache",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+function tokenTesting(token){
 
-          // "Host":"",
-          // // "Access-Control-Allow-Origin": "*",
-          // // "Access-Control-Allow-Headers":"*",
-          // // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-          // "Accept-Encoding":"gzip, deflate, br",
-          // "Connection":"keep-alive",
-          // "withCredentials": "false",
-      }
-    };
-    axios.get('/timetable/mobile', axiosConfig).then((response) => {
-      console.log(response.data);
-    });
-  },[login])
+  var axios = require('axios');
+
+  var config = {
+    method: 'get',
+    url: 'http://api.l3education.com.my/course/list',
+    headers: { 
+      'Authorization': 'Bearer '+token,  
+
+    }
+  };
+  
+  axios(config)
+  .then(function (response) {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  
+}
+
+export default function App() {
+  const [signedin, setSignedin] = useState(0);
+  const [token, setToken] = useState('');
+  const [group, setGroup] = useState('');
+    //use function to set state of setSignedin
+function signedinset(signedin){
+  setSignedin(signedin);
+  }
+  //use function to set state of setToken
+function tokenset(token){
+setToken(token);
+}
+  //use function to set state of setGroup
+function groupset(group){
+  setGroup(group);
+  }
+  useEffect(() => {
+    //get token from local storage
+    setToken(localStorage.getItem(Object.keys(localStorage)
+    .filter( (key)=> key.includes('accessToken') )));
+    
+    },[] );
+useEffect(() => {
+  tokenTesting(token);
+  console.log('info',token,'\n\n',group,'\n');
+  },[token] );
+
   return (
     <>
       <CssBaseline />
       <nav>
+   
       {/* <HideAppBar login={login} somProp={pages} logo={logo} logoTitle="L3Education" /> */}
-      <HideAppBar login={login} somProp={adminPages} logo={logo} logoTitle="L3Education" />
+      <HideAppBar signedinset={signedin} somProp={adminPages} logo={logo} logoTitle="L3Education" />
         <Navbar pages={mainpages} />
       </nav>
       <Routes>
@@ -140,12 +164,11 @@ export default function App() {
         <Route path="Classroom" element={<Classroom />} />
         <Route path="Settings" element={<Settings />} />
         <Route path="Subscriptions" element={<Subscriptions />} />
-{console.log('this',login)}
         <Route path="*" index element={<Mainpage />} />
         <Route path="About_Us" element={<AboutUs />} />
         <Route path="Contact_Us" element={<ContactUs />} />
         <Route path="Our_Courses" element={<OurCourses />} />
-        <Route path="Login" element={<Login setLogin={setLogin} />} />
+        <Route path="Login" element={<Login tokenset={tokenset} groupset={groupset} signedinset={signedinset}/>} />
         <Route path="UserInfo" element={<UserInfo />} />
         <Route path="CreateClassroom" element={<CreateClassroom />} />
         <Route path="EditClassroom" element={<EditClassroom />} />

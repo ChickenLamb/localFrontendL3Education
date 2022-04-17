@@ -18,7 +18,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 async function onSignOutClick() {
   await Auth.signOut()
-    .then(data => { console.log(data); window.location.replace(window.location.origin); })
+    .then(data => { console.log(data);localStorage.clear(); window.location.replace(window.location.origin); })
     .catch(err => console.log(err));
   console.log(Auth.signOut());
 }
@@ -270,8 +270,9 @@ export default function Body(props) {
               <Authenticator formFields={formFields} components={components}>
                 {({ signOut, user }) => (
                   <main>
-                    {console.log(user)}
-                    {props.setLogin(user.signInUserSession.accessToken.jwtToken)}
+                    {props.groupset(user.signInUserSession.accessToken.payload["cognito:groups"].toString())}
+                    {props.tokenset(user.signInUserSession.accessToken.jwtToken)}
+                    {props.signedinset(true)}
                     <Card>
                       <h1>你好，{user.attributes.email}</h1>
                       <h3>确定要登出吗？</h3>

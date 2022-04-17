@@ -42,9 +42,10 @@ export default function Body() {
             <h1>关于我们</h1>
           </Item>
         </Grid>
-        <Grid container xs={12}>
+        
           {Itemlisting.map((item, index) => (
             <>
+            <Grid container xs={12} key={index}>
               <Grid item xs={1}></Grid>
               <Grid item xs={6}>
                 <Item elevation={0}>
@@ -69,10 +70,10 @@ export default function Body() {
                 </Item>
               </Grid>
               <Grid item xs={1}></Grid>
+              </Grid>
             </>
           ))}
         </Grid>
-      </Grid>
     </Box>
   );
 }

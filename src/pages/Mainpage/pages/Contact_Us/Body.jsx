@@ -17,11 +17,11 @@ export default function Body() {
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Item>
+          <Item elevation={0}>
             <h1>联系我们</h1>
-            <p>
+            <div>
               6011-10080862 <br /> lifelongeducation333@gmail.com
-            </p>
+            </div>
           </Item>
         </Grid>
       </Grid>

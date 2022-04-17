@@ -53,7 +53,7 @@ export default function HideAppBar(props) {
       <AppBar>
         <Toolbar>
           <Grid container columns={16}>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Box
                 sx={{
                   display: "inline-flex",
@@ -84,28 +84,32 @@ export default function HideAppBar(props) {
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={12}>
               <Stack
                 direction="row"
                 justifyContent="space-evenly"
                 alignItems="center"
                 spacing={0}
               >
-                {props.login
+                {props.signedinset
       ?<>{props.somProp.map((item, index) => (
-        <>
-          <Item>
-            <NavLink
-              to={item.link}
-              style={(isActive) => ({
-                color: "inherit",
-                textDecoration: "none"
-              })}
-            >
-              {item.name}
-            </NavLink>
-          </Item>
-        </>
+        <ul key={index}>
+          <>
+
+<Item >
+  <NavLink
+    to={item.link}
+    style={(isActive) => ({
+      color: "inherit",
+      textDecoration: "none",
+      whiteSpace:"nowrap",
+    })}
+  >
+    {item.name}
+  </NavLink>
+</Item>
+</>
+        </ul>
       ))}</>
       :<></>
       }
