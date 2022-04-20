@@ -16,17 +16,17 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }));
 
-export default function Body() {
+export default function Body(props) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4}>
           <Item>
             <Profileboard
-              name="趙曉文"
-              desciption="夢裡出現的人，醒來就應該去見他，生活就是怎麼簡單。"
+              name={props.name}
+              desciption={props.desciption}
               image={Image}
-              email={"test@gmail.com"}
+              email={props.email}
             />
           </Item>
         </Grid>

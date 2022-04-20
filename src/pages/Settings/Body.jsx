@@ -23,8 +23,8 @@ export default function Body(props) {
           <Item>
             <Profileboard
               image={Image}
-              name="趙曉文"
-              bio="夢裡出現的人，醒來就應該去見他，生活就是怎麼簡單。"
+              name={props.name}
+              bio={props.bio}
             />
           </Item>
         </Grid>
@@ -32,12 +32,12 @@ export default function Body(props) {
         <Grid item xs={12} sm={12} md={12}>
           <Item>
             <ExtendedInfo
-              phone="0123456789"
-              class="EE3"
-              parentname="Chock"
-              school="MIT.Edu"
-              birthday="2004/09/08"
-              parentphone="0123456788"
+              phone={props.phone}
+              class={props.class}
+              parentname={props.parentname}
+              school={props.school}
+              birthday={props.dob}
+              parentphone={props.parentpn}
             />
           </Item>
         </Grid>

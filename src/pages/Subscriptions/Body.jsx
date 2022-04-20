@@ -63,7 +63,7 @@ const allcourses = [
     time: "none"
   }
 ];
-export default function Body() {
+export default function Body(props) {
   return (
     <Box sx={{ flexGrow: 1, marginLeft: 1 }}>
       <Grid
@@ -76,14 +76,15 @@ export default function Body() {
             <Searchboard />
           </Item>
         </Grid>
-        {allcourses.map((item, index) => (
+        {props.courselist.map((item, index) => (
           <Grid item xs={2} sm={4} md={4} key={index}>
             <Item>
               <Coursescard
-                title={item.title}
+                title={item.courseName}
                 link={item.link}
-                image={item.image}
-                time={item.time}
+                image={"https://i.pravatar.cc/300"}
+                time={item.startDate+" \n"+item.startTime}
+                description={item.courseDescription+"\nTeacher: "+item.teacherName}
               />
             </Item>
           </Grid>

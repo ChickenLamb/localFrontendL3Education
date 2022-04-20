@@ -36,7 +36,7 @@ export default function Coursescard(props) {
       </CardContent>
       <CardActions>
         <Stack sx={{ m: "auto" }} direction="column" spacing={3}>
-          <Item elevation={0}>Not subscribe Yet</Item>
+          <Item elevation={0}>{props.description}</Item>
           <Item>
             <Button size="small">go to classroom{props.link}</Button>
           </Item>
